@@ -97,3 +97,23 @@ If you want, you can also expand this project later to support email/password lo
     }
   }
   ```
+  ### Signin in Account using Email & Password
+  ```Dart
+  //sign with emai & password
+  Future<void> signWithEmailPasword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (error) {
+      print(
+        "Error in sign with email & passwords ${mapFirebaseAuthExceptionCode(errorCode: error.code)}",
+      );
+      throw Exception(mapFirebaseAuthExceptionCode(errorCode: error.code));
+    } catch (error) {
+      print("Unexpected Error occoured $error");
+    }
+  }
+  ```
+  

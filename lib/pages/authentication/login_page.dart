@@ -23,6 +23,50 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   final _formKey = GlobalKey<FormState>();
+
+  bool _isLoading = false;
+  Future<void> _signWithEmailpassword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await AuthServices().signWithEmailPasword(
+        email: email,
+        password: password,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+
+      print("Created Acc with email");
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text('Error registering user: $e'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +113,18 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(height: 10),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {},
-                      child: Text("Register"),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _signWithEmailpassword(
+                            email: _emailContraller.text.trim(),
+                            password: _passwordContraller.text.trim(),
+                          );
+                        }
+                      },
+                      // child: Text("Login"),
+                      child: _isLoading
+                          ? CircularProgressIndicator()
+                          : Text("Login"),
                     ),
                   ),
 

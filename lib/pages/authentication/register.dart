@@ -116,8 +116,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           _createWithEmaipassword(
-                            email: _emailContraller.text,
-                            password: _passwordContraller.text,
+                            email: _emailContraller.text.trim(),
+                            password: _passwordContraller.text.trim(),
                           );
                         }
                       },
