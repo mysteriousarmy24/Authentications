@@ -25,7 +25,7 @@ class AuthendicationPage extends StatelessWidget {
           onPressed: () {
             _annonimousLogin(context);
           },
-          child: Text("Authendication"),
+          child: Text("Anonymous login"),
         ),
       ),
     );

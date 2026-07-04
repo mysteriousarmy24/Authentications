@@ -49,6 +49,26 @@ class AuthServices {
     }
   }
 
+  //sigen with emai & password
+  Future<void> registerWithEmailPasword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (error) {
+      print(
+        "Error in create with email & passwords ${mapFirebaseAuthExceptionCode(errorCode: error.code)}",
+      );
+      throw Exception(mapFirebaseAuthExceptionCode(errorCode: error.code));
+    } catch (error) {
+      print("Unexpected Error occoured $error");
+    }
+  }
+
   //get user details
   User? getUserDetails() {
     return _auth.currentUser;

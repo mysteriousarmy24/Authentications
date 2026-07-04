@@ -1,4 +1,5 @@
 import 'package:authentication_test/pages/authentication/authendication.dart';
+import 'package:authentication_test/pages/authentication/register.dart';
 import 'package:authentication_test/services/auth_services.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MainPage extends StatelessWidget {
       await AuthServices().signOut();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => AuthendicationPage()),
+        MaterialPageRoute(builder: (context) => RegisterPage()),
       );
     } catch (error) {
       print("Error in sin out $error");
