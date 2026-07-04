@@ -49,7 +49,7 @@ class AuthServices {
     }
   }
 
-  //sigen with emai & password
+  //register with emai & password
   Future<void> registerWithEmailPasword({
     required String email,
     required String password,

@@ -74,3 +74,26 @@ flutter run
 ```
 
 If you want, you can also expand this project later to support email/password login, Google sign-in, or persistent authentication.
+
+### Creating Account using Email & Password
+```dart
+//register with emai & password
+  Future<void> registerWithEmailPasword({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } on FirebaseAuthException catch (error) {
+      print(
+        "Error in create with email & passwords ${mapFirebaseAuthExceptionCode(errorCode: error.code)}",
+      );
+      throw Exception(mapFirebaseAuthExceptionCode(errorCode: error.code));
+    } catch (error) {
+      print("Unexpected Error occoured $error");
+    }
+  }
+  ```
