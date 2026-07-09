@@ -67,6 +67,79 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  //google
+  // Future<void> _signWithGoogle() async {
+  //   try {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     await AuthServices().signWithgoogle();
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => MainPage()),
+  //     );
+
+  //     print("Loged in with google");
+  //   } catch (e) {
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: const Text('Error'),
+  //         content: Text('Error login user: $e'),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.of(context).pop(),
+  //             child: const Text('OK'),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } finally {
+  //     setState(() {
+  //       _isLoading = false;
+  //     });
+  //   }
+  // }
+  //git hub
+  Future<void> _signWithGithub() async {
+    try {
+      setState(() {
+        _isLoading = true;
+      });
+      await AuthServices().signWithGitHub();
+      setState(() {
+        _isLoading = false;
+      });
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MainPage()),
+      );
+
+      print("Created Acc with email");
+    } catch (e) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Error'),
+          content: Text('Error signin with github user: $e'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,6 +215,18 @@ class _LoginPageState extends State<LoginPage> {
                         "Create a account,Register Page",
                         style: TextStyle(color: Colors.blueAccent),
                       ),
+                    ),
+                  ),
+                  // Center(
+                  //   child: ElevatedButton(
+                  //     onPressed: _signWithGoogle,
+                  //     child: Text("Google"),
+                  //   ),
+                  // ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _signWithGithub,
+                      child: Text("Git Hub"),
                     ),
                   ),
                 ],

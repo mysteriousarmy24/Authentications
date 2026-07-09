@@ -1,8 +1,13 @@
 import 'package:authentication_test/pages/exeptions/auth_exceptions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  //final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email', 'profile']);
+
+  // static const String _serverClientId =
+  //     '10312021689-58acq92fv53qreq2d0sd1n75sj59nu6k.apps.googleusercontent.com';
   //sign annonimously
   Future<void> signInAnnonimously() async {
     try {
@@ -83,6 +88,45 @@ class AuthServices {
       throw Exception(mapFirebaseAuthExceptionCode(errorCode: error.code));
     } catch (error) {
       print("Unexpected Error occoured $error");
+    }
+  }
+
+  //sign with google
+  // Future<void> signWithgoogle() async {
+  //   try {
+  //     final googleUser = await _googleSignIn.signIn();
+
+  //     if (googleUser == null) {
+  //       print("Google sign in cancelled");
+  //       return;
+  //     }
+
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //     final OAuthCredential credential = GoogleAuthProvider.credential(
+  //       accessToken: googleAuth.accessToken,
+  //       idToken: googleAuth.idToken,
+  //     );
+
+  //     await _auth.signInWithCredential(credential);
+  //     print("Signed in with Google: ${googleUser.email}");
+  //   } on FirebaseAuthException catch (error) {
+  //     print(
+  //       "Error signing in with Google ${mapFirebaseAuthExceptionCode(errorCode: error.code)}",
+  //     );
+  //     throw Exception(mapFirebaseAuthExceptionCode(errorCode: error.code));
+  //   } catch (error) {
+  //     print("Unexpected error occurred: $error");
+  //   }
+  // }
+  //sign with github
+  Future<void> signWithGitHub() async {
+    try {
+      final GithubAuthProvider signWithGithub = GithubAuthProvider();
+      await _auth.signInWithProvider(signWithGithub);
+    } on Exception catch (e) {
+      print("Error in authservices github signin $e");
     }
   }
 
