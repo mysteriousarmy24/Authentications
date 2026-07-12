@@ -130,6 +130,21 @@ class AuthServices {
     }
   }
 
+  //reset password
+  Future<void> sendPasswordResetEmail({required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      print("Password reset email sent to $email");
+    } on FirebaseException catch (e) {
+      print(
+        "Error in authservices reset password ${mapFirebaseAuthExceptionCode(errorCode: e.code)}",
+      );
+      throw (mapFirebaseAuthExceptionCode(errorCode: e.code));
+    } catch (e) {
+      print("Unexpected error occurred: $e");
+    }
+  }
+
   //get user details
   User? getUserDetails() {
     return _auth.currentUser;

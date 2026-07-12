@@ -7,6 +7,14 @@ This project demonstrates a simple Firebase Authentication flow in Flutter with:
 - Firebase exception handling with user-friendly messages
 
 ## Authentication flow
+```YAML
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.0.0      # Use latest compatible versions
+  firebase_auth: ^5.0.0
+  google_sign_in: ^6.2.0
+  ```
 
 ### 1. Anonymous login
 
@@ -116,4 +124,74 @@ If you want, you can also expand this project later to support email/password lo
     }
   }
   ```
+  ### Sign in with Git Hub
+  ```Dart
+  //sign with github
+  Future<void> signWithGitHub() async {
+    try {
+      final GithubAuthProvider signWithGithub = GithubAuthProvider();
+      await _auth.signInWithProvider(signWithGithub);
+    } on Exception catch (e) {
+      print("Error in authservices github signin $e");
+    }
+  }
+  ```
+  ### Signin with Gmail
+  ```Dart
+  import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+class AuthService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<User?> signInWithGoogle() async {
+    try {
+      // 1. Trigger the native Google sign-in overlay
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser == null) return null; // User aborted the sign-in
+
+      // 2. Obtain authentication details (tokens) from the request
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // 3. Create a new credential for Firebase Auth
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // 4. Sign in to Firebase with the credential and return the user
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+      return userCredential.user;
+      
+    } catch (e) {
+      print("Google Sign-In Error: $e");
+      return null;
+    }
+  }
+
+  // Sign out helper
+  Future<void> signOut() async {
+    await _googleSignIn.signOut();
+    await _auth.signOut();
+  }
+}
+```
+### Reset Password
+```Dart
+ Future<void> sendPasswordResetEmail({required String email}) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+      print("Password reset email sent to $email");
+    } on FirebaseException catch (e) {
+      print(
+        "Error in authservices reset password ${mapFirebaseAuthExceptionCode(errorCode: e.code)}",
+      );
+      throw (mapFirebaseAuthExceptionCode(errorCode: e.code));
+    } catch (e) {
+      print("Unexpected error occurred: $e");
+    }
+  }
+  ```
+  
   

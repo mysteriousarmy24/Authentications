@@ -1,3 +1,4 @@
+import 'package:authentication_test/pages/authentication/forgot_password_page.dart';
 import 'package:authentication_test/pages/authentication/register.dart';
 import 'package:authentication_test/pages/main-page.dart';
 import 'package:authentication_test/services/auth_services.dart';
@@ -227,6 +228,22 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       onPressed: _signWithGithub,
                       child: Text("Git Hub"),
+                    ),
+                  ),
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ForgotPasswordPage(),
+                          ),
+                        );
+                      },
+                      child: Text(
+                        "Forgot Password",
+                        style: TextStyle(color: Colors.blueAccent),
+                      ),
                     ),
                   ),
                 ],
