@@ -1,4 +1,5 @@
 import 'package:authentication_test/pages/authentication/register.dart';
+import 'package:authentication_test/pages/authentication/wrapper.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,6 +16,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: RegisterPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: Wrapper());
   }
 }

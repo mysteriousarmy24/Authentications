@@ -193,5 +193,32 @@ class AuthService {
     }
   }
   ```
-  
+  ### Creating Wrapper to prevent redirecting to register page after a Hot restart
+
+  ## 01.Create a Dart file called "wrapper.dart".
+  ## 02.Implement this code 
+  ```Dart
+  class Wrapper extends StatelessWidget {
+  const Wrapper({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('Something went wrong!'));
+        } else if (snapshot.hasData) {
+          return MainPage();
+        } else {
+          return const LoginPage();
+        }
+      },
+    );
+  }
+}
+```
+
   
